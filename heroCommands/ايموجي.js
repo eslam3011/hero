@@ -1,6 +1,3 @@
-// متغير عام لحفظ حالة اللعبة
-let currentGame = null;
-
 export default {
   keywords: ['ايموجي'],
   age: 17,
@@ -29,7 +26,7 @@ export default {
       { question: "وجه يقبل", answer: "😘" },
       { question: "وجه مريض", answer: "🤒" },
       { question: "وجه مجنون", answer: "🤪" },
-
+      
       // الأشخاص والأنشطة
       { question: "رجل يرفع يده", answer: "🙋‍♂️" },
       { question: "امرأة ترفع يدها", answer: "🙋‍♀️" },
@@ -46,7 +43,7 @@ export default {
       { question: "طباخ", answer: "👨‍🍳" },
       { question: "معلم", answer: "👨‍🏫" },
       { question: "شرطي", answer: "👮" },
-
+      
       // القلوب والحب
       { question: "قلب احمر", answer: "❤️" },
       { question: "قلب اصفر", answer: "💛" },
@@ -58,7 +55,7 @@ export default {
       { question: "قلبان", answer: "💕" },
       { question: "قلب ينبض", answer: "💓" },
       { question: "قلب مع نجمة", answer: "💖" },
-
+      
       // الحيوانات
       { question: "قطة", answer: "🐱" },
       { question: "كلب", answer: "🐶" },
@@ -80,7 +77,7 @@ export default {
       { question: "عنكبوت", answer: "🕷️" },
       { question: "ثعبان", answer: "🐍" },
       { question: "تمساح", answer: "🐊" },
-
+      
       // الطعام والشراب
       { question: "تفاحة", answer: "🍎" },
       { question: "موزة", answer: "🍌" },
@@ -102,7 +99,7 @@ export default {
       { question: "لحم", answer: "🥩" },
       { question: "دجاج", answer: "🍗" },
       { question: "سمك", answer: "🐟" },
-
+      
       // الطبيعة والطقس
       { question: "شمس", answer: "☀️" },
       { question: "قمر", answer: "🌙" },
@@ -119,7 +116,7 @@ export default {
       { question: "بحر", answer: "🌊" },
       { question: "نار", answer: "🔥" },
       { question: "زهرة", answer: "🌸" },
-
+      
       // المواصلات
       { question: "سيارة", answer: "🚗" },
       { question: "باص", answer: "🚌" },
@@ -133,7 +130,7 @@ export default {
       { question: "اسعاف", answer: "🚑" },
       { question: "اطفائية", answer: "🚒" },
       { question: "شرطة", answer: "🚓" },
-
+      
       // الرياضة والألعاب
       { question: "كرة قدم", answer: "⚽" },
       { question: "كرة سلة", answer: "🏀" },
@@ -145,7 +142,7 @@ export default {
       { question: "لعبة", answer: "🎮" },
       { question: "كارت", answer: "🎴" },
       { question: "نرد", answer: "🎲" },
-
+      
       // الأشياء والأدوات
       { question: "هاتف", answer: "📱" },
       { question: "كمبيوتر", answer: "💻" },
@@ -162,7 +159,7 @@ export default {
       { question: "مطرقة", answer: "🔨" },
       { question: "مفك", answer: "🔧" },
       { question: "سكين", answer: "🔪" },
-
+      
       // المباني والأماكن
       { question: "بيت", answer: "🏠" },
       { question: "مدرسة", answer: "🏫" },
@@ -173,73 +170,149 @@ export default {
       { question: "خيمة", answer: "⛺" },
       { question: "جسر", answer: "🌉" },
       { question: "مكتب", answer: "🏢" },
-      { question: "فندق", answer: "🏨" }
+      { question: "فندق", answer: "🏨" },
+      
+      // الإيماءات والأيدي
+      { question: "يد ترحب", answer: "👋" },
+      { question: "يد تصفق", answer: "👏" },
+      { question: "اصبع يشير", answer: "👉" },
+      { question: "قبضة", answer: "✊" },
+      { question: "سلام", answer: "✌️" },
+      { question: "موافق", answer: "👌" },
+      { question: "ابهام لأعلى", answer: "👍" },
+      { question: "ابهام لأسفل", answer: "👎" },
+      { question: "صلاة", answer: "🙏" },
+      { question: "عضلات", answer: "💪" },
+      
+      // الملابس والإكسسوارات
+      { question: "قميص", answer: "👕" },
+      { question: "فستان", answer: "👗" },
+      { question: "حذاء", answer: "👞" },
+      { question: "قبعة", answer: "👒" },
+      { question: "تاج", answer: "👑" },
+      { question: "خاتم", answer: "💍" },
+      { question: "قلادة", answer: "📿" },
+      { question: "جوارب", answer: "🧦" },
+      { question: "قفازات", answer: "🧤" },
+      { question: "وشاح", answer: "🧣" },
+      
+      // الموسيقى والفن
+      { question: "ملاحظة موسيقية", answer: "🎵" },
+      { question: "جيتار", answer: "🎸" },
+      { question: "بيانو", answer: "🎹" },
+      { question: "طبل", answer: "🥁" },
+      { question: "فرشاة رسم", answer: "🖌️" },
+      { question: "صورة", answer: "🖼️" },
+      { question: "مسرح", answer: "🎭" },
+      { question: "ميكروفون", answer: "🎤" },
+      { question: "سماعات", answer: "🎧" },
+      { question: "فيلم", answer: "🎬" },
+      
+      // العلم والتكنولوجيا
+      { question: "صاروخ", answer: "🚀" },
+      { question: "قمر صناعي", answer: "🛰️" },
+      { question: "مجهر", answer: "🔬" },
+      { question: "تلسكوب", answer: "🔭" },
+      { question: "حاسوب", answer: "💻" },
+      { question: "روبوت", answer: "🤖" },
+      { question: "بطارية", answer: "🔋" },
+      { question: "مصباح", answer: "💡" },
+      { question: "مغناطيس", answer: "🧲" },
+      { question: "جزيئة", answer: "⚛️" },
+      
+      // الاحتفالات والأعياد
+      { question: "هدية", answer: "🎁" },
+      { question: "بالونات", answer: "🎈" },
+      { question: "كعكة عيد ميلاد", answer: "🎂" },
+      { question: "شمعة", answer: "🕯️" },
+      { question: "ألعاب نارية", answer: "🎆" },
+      { question: "كريسماس", answer: "🎄" },
+      { question: "بابا نويل", answer: "🎅" },
+      { question: "جاك اوليترن", answer: "🎃" },
+      { question: "أرنب عيد الفصح", answer: "🐰" },
+      { question: "بيضة ملونة", answer: "🥚" },
+      
+      // الصحة والطب
+      { question: "قرص دواء", answer: "💊" },
+      { question: "حقنة", answer: "💉" },
+      { question: "ميزان حرارة", answer: "🌡️" },
+      { question: "فيتامين", answer: "🧪" },
+      { question: "قناع طبي", answer: "😷" },
+      { question: "سماعة طبيب", answer: "🩺" },
+      { question: "عكاز", answer: "🦯" },
+      { question: "كرسي متحرك", answer: "♿" },
+      { question: "لصقة", answer: "🩹" },
+      { question: "اسعاف", answer: "⚕️" }
     ];
 
     // اختيار سؤال عشوائي
     const random_index = Math.floor(Math.random() * questions.length);
     const random_question = questions[random_index];
-
-    // حفظ اللعبة الحالية
-    currentGame = {
-      threadID: event.threadID,
-      question: random_question.question,
-      answer: random_question.answer,
-      active: true
+    
+    // إرسال السؤال العشوائي
+    await message.reply("🎯 أول من يرسل هذا الإيموجي يفوز!\n\n📝 السؤال: " + random_question.question);
+    
+    // دالة لبدء لعبة جديدة
+    const startNewGame = async () => {
+      try {
+        const new_random_index = Math.floor(Math.random() * questions.length);
+        const new_random_question = questions[new_random_index];
+        await api.sendMessage("🎯 لعبة جديدة! أول من يرسل هذا الإيموجي يفوز!\n\n📝 السؤال: " + new_random_question.question, event.threadID);
+        return new_random_question;
+      } catch (error) {
+        console.error("خطأ في بدء لعبة جديدة:", error);
+        throw error;
+      }
     };
-
-    const gameMessage = `
-╭─────────────────────────╮
-│        🎯 لعبة الايموجي      │
-╰─────────────────────────╯
-
-📝 السؤال: ${random_question.question}
-
-🏆 أول من يرسل الإيموجي الصحيح يفوز!
-⭐ المكافأة: 5 نقاط
-
-╭─────────────────────────╮
-│ 💡 لبدء لعبة جديدة اكتب "ايموجي" │
-╰─────────────────────────╯
-    `;
-
-    await message.reply(gameMessage);
+    
+    let currentQuestion = random_question;
+    let stopListening;
+    
+    // دالة الاستماع
+    const setupListener = () => {
+      try {
+        stopListening = api.listenMqtt((err, event) => {
+          if (err) {
+            console.error("خطأ في الاستماع:", err);
+            return;
+          }
+          
+          if (event.type === "message" && event.body) {
+            try {
+              // التحقق من الإجابة الصحيحة
+              if (event.body.trim() === currentQuestion.answer) {
+                api.sendMessage("🎉 مبروك! قام " + (event.senderName || "اللاعب") + " بكتابة الإجابة الصحيحة: " + currentQuestion.answer, event.threadID);
+                if (stopListening) stopListening(); // إيقاف الاستماع
+              }
+              // التحقق من طلب لعبة جديدة
+              else if (event.body.trim() === "ايموجي") {
+                if (stopListening) stopListening(); // إيقاف الاستماع الحالي
+                // بدء لعبة جديدة
+                startNewGame().then((newQuestion) => {
+                  currentQuestion = newQuestion;
+                  setupListener(); // إعداد استماع جديد
+                }).catch((error) => {
+                  console.error("خطأ في إعداد لعبة جديدة:", error);
+                });
+              }
+              // إذا كانت الرسالة تحتوي على إيموجي لكنها خاطئة
+              else if (/[\u{1F600}-\u{1F64F}]|[\u{1F300}-\u{1F5FF}]|[\u{1F680}-\u{1F6FF}]|[\u{1F1E0}-\u{1F1FF}]|[\u{2600}-\u{26FF}]|[\u{2700}-\u{27BF}]/u.test(event.body)) {
+                // إرسال رسالة في المجموعة للإجابة الخاطئة
+                api.sendMessage("❌ الإجابة خاطئة! حاول مرة أخرى.\n💡 المطلوب: " + currentQuestion.question, event.threadID);
+                // طباعة في الكونسول للتتبع
+                console.log("❌ الإجابة غلط - أرسل " + (event.senderName || "مجهول") + ": " + event.body + " والإجابة الصحيحة هي: " + currentQuestion.answer);
+              }
+            } catch (messageError) {
+              console.error("خطأ في معالجة الرسالة:", messageError);
+            }
+          }
+        });
+      } catch (listenerError) {
+        console.error("خطأ في إعداد الاستماع:", listenerError);
+      }
+    };
+    
+    // بدء الاستماع الأول
+    setupListener();
   }
 };
-
-// دالة للتحقق من الإجابة (ستُستخدم في event handler)
-export function checkEmojiAnswer(event, message) {
-  return new Promise(async (resolve) => {
-    if (!currentGame || currentGame.threadID !== event.threadID || !currentGame.active) {
-      resolve(false);
-      return;
-    }
-
-    if (event.body === currentGame.answer) {
-      try {
-        const winMessage = `
-╭─────────────────────────╮
-│        🎉 مبروك!             │
-╰─────────────────────────╯
-
-🏆 أجبت إجابة صحيحة!
-⭐ حصلت على: 5 نقاط
-🎯 الإجابة الصحيحة: ${currentGame.answer}
-
-╭─────────────────────────╮
-│ 🎮 العب مرة أخرى! اكتب "ايموجي" │
-╰─────────────────────────╯
-        `;
-
-        await message.reply(winMessage);
-        currentGame.active = false; // إنهاء اللعبة
-        resolve(true);
-      } catch (error) {
-        console.error('خطأ في إرسال رسالة الفوز:', error);
-        resolve(false);
-      }
-    } else {
-      resolve(false);
-    }
-  });
-}
