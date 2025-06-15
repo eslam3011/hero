@@ -13,7 +13,9 @@ export default {
     message,
     convertTime,
     getTime
-  }) {api currentTime = getTime('DD/MM/YYYY - HH:mm:ss');
+  }) {
+    
+    const currentTime = getTime('DD/MM/YYYY - HH:mm:ss');
     
     const helpMessage = `
 ╭─────────────────────────╮
@@ -49,10 +51,7 @@ export default {
 └─ 👨‍💻 المطور: ملك الجحيم        │
 ╰─────────────────────────╯
 
-🌟 تم التحديث لعام 2025 بتقنيات حديثة!
 
-📧 للدعم: https://wa.me/201119558517
-🌐 الموقع: https://facebook.com/profile.php?id=100065172561645
     `;
     
     await message.send(helpMessage);
