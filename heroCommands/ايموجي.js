@@ -147,7 +147,7 @@ export default {
 };
 
 // دالة للتحقق من الإجابة (ستُستخدم في event handler)
-export function checkEmojiAnswer(event, message, usersData) {
+export function checkEmojiAnswer(event, message) {
   return new Promise(async (resolve) => {
     if (!currentGame || currentGame.threadID !== event.threadID) {
       resolve(false);
@@ -156,33 +156,25 @@ export function checkEmojiAnswer(event, message, usersData) {
 
     if (event.body === currentGame.answer) {
       try {
-        const userName = await usersData.getName(event.senderID);
-        const userData = await usersData.get(event.senderID);
-
-        let pointsCount = 5;
-        if (userData.data && userData.data.games && userData.data.games.points) {
-          pointsCount = userData.data.games.points + 5;
-        }
-
-        await usersData.set(event.senderID, { points: pointsCount }, "data.games");
-
         const winMessage = `
 ╭─────────────────────────╮
 │        🎉 مبروك!             │
 ╰─────────────────────────╯
 
-🏆 ${userName} أجاب إجابة صحيحة!
+🏆 أجبت إجابة صحيحة!
 ⭐ حصلت على: 5 نقاط
-📊 إجمالي نقاطك: ${pointsCount}
+🎯 الإجابة الصحيحة: ${currentGame.answer}
 
-${currentGame.answer} ← الإجابة الصحيحة
+╭─────────────────────────╮
+│ 🎮 العب مرة أخرى! اكتب "ايموجي" │
+╰─────────────────────────╯
         `;
 
         await message.reply(winMessage);
         currentGame = null;
         resolve(true);
       } catch (error) {
-        console.error('خطأ في حفظ النقاط:', error);
+        console.error('خطأ في إرسال رسالة الفوز:', error);
         resolve(false);
       }
     } else {

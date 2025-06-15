@@ -280,20 +280,7 @@ async function handleEvent(api, event) {
         } else {
           // التحقق من إجابات لعبة الايموجي
           try {
-            const emojiAnswered = await checkEmojiAnswer(event, message(api, event), { 
-              getName: async (id) => {
-                // يمكنك إضافة منطق للحصول على اسم المستخدم هنا
-                return `المستخدم ${id}`;
-              },
-              get: async (id) => {
-                // يمكنك إضافة منطق للحصول على بيانات المستخدم هنا
-                return { data: { games: { points: 0 } } };
-              },
-              set: async (id, data, path) => {
-                // يمكنك إضافة منطق لحفظ بيانات المستخدم هنا
-                console.log(`حفظ ${JSON.stringify(data)} للمستخدم ${id} في ${path}`);
-              }
-            });
+            const emojiAnswered = await checkEmojiAnswer(event, message(api, event));
           } catch (error) {
             console.error('خطأ في التحقق من إجابة الايموجي:', error);
           }
