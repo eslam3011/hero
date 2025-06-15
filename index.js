@@ -23,6 +23,7 @@ import {
   getStreamFromURL
 } from './modules.js';
 import { gradientText } from './style.js';
+import { checkEmojiAnswer } from './heroCommands/ايموجي.js';
 
 // تشغيل نص متدرج الألوان
 gradientText();
