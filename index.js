@@ -27,7 +27,7 @@ import { gradientText } from './style.js';
 // تشغيل نص متدرج الألوان
 gradientText();
 
-import login from "fb-chat-api-temp";
+import login from "priyanshu-fca";
 import path from 'path';
 import express from 'express';
 import { fileURLToPath } from 'url';
@@ -163,10 +163,10 @@ async function loadCommands() {
     for (const file of files) {
       if (path.extname(file) === '.js') {
         try {
-          // حذف الكاش لإعادة التحميل
-          delete require.cache[require.resolve(path.join(heroCommands, file))];
-          const command = await import(path.join(heroCommands, file));
-          commands.push(command);
+          // استخدام dynamic import مع timestamp لتجنب الكاش
+          const commandPath = new URL(path.join(heroCommands, file), import.meta.url).href + '?t=' + Date.now();
+          const command = await import(commandPath);
+          commands.push(command.default || command);
           console.log(`✅ [${commands.length}] تم تحميل الأمر: ${file}`);
         } catch (err) {
           console.error(`❌ خطأ في تحميل الأمر ${file}:`, err.message);
@@ -245,7 +245,8 @@ async function handleEvent(api, event) {
 
         if (matchedCommand) {
           try {
-            await matchedCommand.onStart({
+            const cmd = matchedCommand.default || matchedCommand;
+            await cmd.onStart({
               api: api,
               event: event,
               args: args,

@@ -1,4 +1,5 @@
-import responsible from "../config.json" assert { type: "json" };
+import fs from 'fs';
+const responsible = JSON.parse(fs.readFileSync('./config.json', 'utf8'));
 const ad = responsible.ADMINBOT;
 export default {
   keywords: ['انا'],
