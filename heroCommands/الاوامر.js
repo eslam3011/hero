@@ -13,9 +13,7 @@ export default {
     message,
     convertTime,
     getTime
-  }) {
-    
-    const currentTime = getTime('DD/MM/YYYY - HH:mm:ss');
+  }) {api currentTime = getTime('DD/MM/YYYY - HH:mm:ss');
     
     const helpMessage = `
 ╭─────────────────────────╮

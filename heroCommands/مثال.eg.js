@@ -1,6 +1,6 @@
 
 export default {
-  keywords: ['المطور'],
+  keywords: [''],
   age: 17,
   Developer: 'khir',
   name: 'khir salh',
@@ -30,16 +30,6 @@ export default {
     shortenURL,
     getStreamFromURL,
   }) {
-    message.send(`‖↫ الاسم :〖خير صالح 〗
-
-‖↫العمر :  〖 19 سنة〗
-
-‖↫البلد : 〖مصر ام العالم〗
-
-‖↫رقم الواتس: 〖+201119558517〗
-
-‖↫الفيسبوك: 〖https://facebook.com/profile.php?id=100065172561645〗
-
-‖↫البوت تم تطويره في عام 2025 ✨`);
+    
   },
 };
