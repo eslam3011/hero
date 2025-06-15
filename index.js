@@ -37,7 +37,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const app = express();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 5000;
 
 // إعدادات Express
 app.use(express.json());
@@ -233,6 +233,11 @@ async function startBot() {
 
 // معالجة الأحداث
 async function handleEvent(api, event) {
+  // تجنب معالجة الرسائل المرسلة من البوت نفسه
+  if (event.senderID === api.getCurrentUserID()) {
+    return;
+  }
+
   switch (event.type) {
     case "message":
       if (event.body && typeof event.body === 'string') {
@@ -297,7 +302,18 @@ async function handleEvent(api, event) {
 // بدء الخادم
 app.listen(port, '0.0.0.0', () => {
   console.log(`🌐 الخادم يعمل على المنفذ: ${port}`);
-  console.log(`🔗 الرابط: http://localhost:${port}`);
+  console.log(`🔗 الرابط: http://0.0.0.0:${port}`);
+}).on('error', (err) => {
+  if (err.code === 'EADDRINUSE') {
+    console.log(`⚠️ المنفذ ${port} مُستخدم، جاري المحاولة على منفذ آخر...`);
+    const newPort = port + 1;
+    app.listen(newPort, '0.0.0.0', () => {
+      console.log(`🌐 الخادم يعمل على المنفذ: ${newPort}`);
+      console.log(`🔗 الرابط: http://0.0.0.0:${newPort}`);
+    });
+  } else {
+    console.error('خطأ في بدء الخادم:', err);
+  }
 });
 
 // بدء تشغيل البوت
