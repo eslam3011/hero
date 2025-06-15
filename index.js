@@ -209,7 +209,7 @@ async function startBot() {
       });
 
       // الاستماع للرسائل
-      const listenEmitter = api.listen(async (err, event) => {
+      api.listenMqtt(async (err, event) => {
         if (err) {
           console.error('❌ خطأ في الاستماع:', err);
           return;

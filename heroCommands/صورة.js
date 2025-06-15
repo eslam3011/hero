@@ -1,3 +1,4 @@
+
 import axios from 'axios';
 
 export default {
@@ -26,7 +27,7 @@ getExtFromAttachmentType,
     translate,
     shortenURL,
 getStreamFromURL,
-  }) {s');
+  }) {
 
 const apiUrl = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=en&dt=t&q=${args.join(" ")}`;
 

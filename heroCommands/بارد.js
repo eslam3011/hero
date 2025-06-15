@@ -1,3 +1,4 @@
+
 import axios from 'axios';
 
 export default {
@@ -54,9 +55,5 @@ export default {
         console.error('API Error:', error.message);
         message.reply('عذراً، حدث خطأ في الاتصال بالAPI');
       });
-  },
-};
-      });
-
   },
 };

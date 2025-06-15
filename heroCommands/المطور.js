@@ -1,3 +1,4 @@
+
 export default {
   keywords: ['المطور'],
   age: 17,
@@ -40,10 +41,5 @@ export default {
 ‖↫الفيسبوك: 〖https://facebook.com/profile.php?id=100065172561645〗
 
 ‖↫البوت تم تطويره في عام 2025 ✨`);
-  },
-};م 〗
-
-‖↫الفيس :〖www.facebook.com/100065172561645 〗`)
-    
   },
 };
