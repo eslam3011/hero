@@ -312,7 +312,13 @@ export default {
           const userMessage = incomingEvent.body.trim();
 
           // التحقق من الإجابة الصحيحة
-          if (userMessage === gameState.currentQuestion.answer) {
+          // تنظيف النص من المسافات الزائدة والرموز الخفية
+          const cleanUserMessage = userMessage.replace(/\s+/g, '').trim();
+          const cleanAnswer = gameState.currentQuestion.answer.replace(/\s+/g, '').trim();
+          
+          console.log(`مقارنة: "${cleanUserMessage}" مع "${cleanAnswer}"`);
+          
+          if (cleanUserMessage === cleanAnswer || userMessage === gameState.currentQuestion.answer) {
             const winnerName = incomingEvent.senderName || "اللاعب";
             const winMessage = `🎉 مبروك! قام ${winnerName} بكتابة الإجابة الصحيحة: ${gameState.currentQuestion.answer}\n\n💡 اكتب "ايموجي" للعب مرة أخرى!`;
 
