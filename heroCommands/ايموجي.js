@@ -26,7 +26,7 @@ export default {
       { question: "وجه يقبل", answer: "😘" },
       { question: "وجه مريض", answer: "🤒" },
       { question: "وجه مجنون", answer: "🤪" },
-      
+
       // الأشخاص والأنشطة
       { question: "رجل يرفع يده", answer: "🙋‍♂️" },
       { question: "امرأة ترفع يدها", answer: "🙋‍♀️" },
@@ -43,7 +43,7 @@ export default {
       { question: "طباخ", answer: "👨‍🍳" },
       { question: "معلم", answer: "👨‍🏫" },
       { question: "شرطي", answer: "👮" },
-      
+
       // القلوب والحب
       { question: "قلب احمر", answer: "❤️" },
       { question: "قلب اصفر", answer: "💛" },
@@ -55,7 +55,7 @@ export default {
       { question: "قلبان", answer: "💕" },
       { question: "قلب ينبض", answer: "💓" },
       { question: "قلب مع نجمة", answer: "💖" },
-      
+
       // الحيوانات
       { question: "قطة", answer: "🐱" },
       { question: "كلب", answer: "🐶" },
@@ -77,7 +77,7 @@ export default {
       { question: "عنكبوت", answer: "🕷️" },
       { question: "ثعبان", answer: "🐍" },
       { question: "تمساح", answer: "🐊" },
-      
+
       // الطعام والشراب
       { question: "تفاحة", answer: "🍎" },
       { question: "موزة", answer: "🍌" },
@@ -99,7 +99,7 @@ export default {
       { question: "لحم", answer: "🥩" },
       { question: "دجاج", answer: "🍗" },
       { question: "سمك", answer: "🐟" },
-      
+
       // الطبيعة والطقس
       { question: "شمس", answer: "☀️" },
       { question: "قمر", answer: "🌙" },
@@ -116,7 +116,7 @@ export default {
       { question: "بحر", answer: "🌊" },
       { question: "نار", answer: "🔥" },
       { question: "زهرة", answer: "🌸" },
-      
+
       // المواصلات
       { question: "سيارة", answer: "🚗" },
       { question: "باص", answer: "🚌" },
@@ -130,7 +130,7 @@ export default {
       { question: "اسعاف", answer: "🚑" },
       { question: "اطفائية", answer: "🚒" },
       { question: "شرطة", answer: "🚓" },
-      
+
       // الرياضة والألعاب
       { question: "كرة قدم", answer: "⚽" },
       { question: "كرة سلة", answer: "🏀" },
@@ -142,7 +142,7 @@ export default {
       { question: "لعبة", answer: "🎮" },
       { question: "كارت", answer: "🎴" },
       { question: "نرد", answer: "🎲" },
-      
+
       // الأشياء والأدوات
       { question: "هاتف", answer: "📱" },
       { question: "كمبيوتر", answer: "💻" },
@@ -159,7 +159,7 @@ export default {
       { question: "مطرقة", answer: "🔨" },
       { question: "مفك", answer: "🔧" },
       { question: "سكين", answer: "🔪" },
-      
+
       // المباني والأماكن
       { question: "بيت", answer: "🏠" },
       { question: "مدرسة", answer: "🏫" },
@@ -171,7 +171,7 @@ export default {
       { question: "جسر", answer: "🌉" },
       { question: "مكتب", answer: "🏢" },
       { question: "فندق", answer: "🏨" },
-      
+
       // الإيماءات والأيدي
       { question: "يد ترحب", answer: "👋" },
       { question: "يد تصفق", answer: "👏" },
@@ -183,7 +183,7 @@ export default {
       { question: "ابهام لأسفل", answer: "👎" },
       { question: "صلاة", answer: "🙏" },
       { question: "عضلات", answer: "💪" },
-      
+
       // الملابس والإكسسوارات
       { question: "قميص", answer: "👕" },
       { question: "فستان", answer: "👗" },
@@ -195,7 +195,7 @@ export default {
       { question: "جوارب", answer: "🧦" },
       { question: "قفازات", answer: "🧤" },
       { question: "وشاح", answer: "🧣" },
-      
+
       // الموسيقى والفن
       { question: "ملاحظة موسيقية", answer: "🎵" },
       { question: "جيتار", answer: "🎸" },
@@ -207,7 +207,7 @@ export default {
       { question: "ميكروفون", answer: "🎤" },
       { question: "سماعات", answer: "🎧" },
       { question: "فيلم", answer: "🎬" },
-      
+
       // العلم والتكنولوجيا
       { question: "صاروخ", answer: "🚀" },
       { question: "قمر صناعي", answer: "🛰️" },
@@ -219,7 +219,7 @@ export default {
       { question: "مصباح", answer: "💡" },
       { question: "مغناطيس", answer: "🧲" },
       { question: "جزيئة", answer: "⚛️" },
-      
+
       // الاحتفالات والأعياد
       { question: "هدية", answer: "🎁" },
       { question: "بالونات", answer: "🎈" },
@@ -231,7 +231,7 @@ export default {
       { question: "جاك اوليترن", answer: "🎃" },
       { question: "أرنب عيد الفصح", answer: "🐰" },
       { question: "بيضة ملونة", answer: "🥚" },
-      
+
       // الصحة والطب
       { question: "قرص دواء", answer: "💊" },
       { question: "حقنة", answer: "💉" },
@@ -245,19 +245,29 @@ export default {
       { question: "اسعاف", answer: "⚕️" }
     ];
 
-    // التحقق من وجود الدوال المطلوبة
-    if (!api || typeof api.sendMessage !== 'function') {
-      console.error("API غير متوفر أو غير مكتمل");
-      return;
+    // استخدام متغير global لتخزين حالة اللعبة لكل مجموعة
+    if (!global.emojiGames) {
+      global.emojiGames = new Map();
     }
 
-    // متغيرات حالة اللعبة
-    let gameState = {
-      currentQuestion: null,
-      threadID: event.threadID,
-      isListening: false,
-      stopListening: null
-    };
+    const threadID = event.threadID;
+
+    // التحقق من وجود لعبة نشطة في هذه المجموعة
+    if (global.emojiGames.has(threadID)) {
+      const existingGame = global.emojiGames.get(threadID);
+
+      // إيقاف الاستماع السابق
+      if (existingGame.stopListening && typeof existingGame.stopListening === 'function') {
+        try {
+          existingGame.stopListening();
+        } catch (e) {
+          console.error("خطأ في إيقاف الاستماع السابق:", e);
+        }
+      }
+
+      // حذف اللعبة السابقة
+      global.emojiGames.delete(threadID);
+    }
 
     // دالة لاختيار سؤال عشوائي
     const getRandomQuestion = () => {
@@ -265,155 +275,82 @@ export default {
       return { ...questions[randomIndex] };
     };
 
-    // دالة لبدء لعبة جديدة
-    const startNewGame = async () => {
-      try {
-        // إيقاف الاستماع السابق بشكل قوي
-        if (gameState.stopListening && typeof gameState.stopListening === 'function') {
-          try {
-            gameState.stopListening();
-            gameState.stopListening = null;
-            gameState.isListening = false;
-          } catch (e) {
-            console.error("خطأ في إيقاف الاستماع في startNewGame:", e);
-          }
-        }
-
-        // التأكد من إعادة تعيين الحالة
-        gameState.isListening = false;
-        gameState.stopListening = null;
-
-        // اختيار سؤال جديد
-        gameState.currentQuestion = getRandomQuestion();
-        
-        // إرسال السؤال
-        const questionMessage = "🎯 لعبة جديدة! أول من يرسل هذا الإيموجي يفوز!\n\n📝 السؤال: " + gameState.currentQuestion.question;
-        await api.sendMessage(questionMessage, gameState.threadID);
-        
-        // بدء الاستماع الجديد
-        setupListener();
-        
-        return gameState.currentQuestion;
-      } catch (error) {
-        console.error("خطأ في بدء لعبة جديدة:", error);
-        await api.sendMessage("❌ حدث خطأ في بدء لعبة جديدة", gameState.threadID);
-        throw error;
-      }
+    // إنشاء لعبة جديدة
+    const gameState = {
+      currentQuestion: getRandomQuestion(),
+      threadID: threadID,
+      isActive: true,
+      stopListening: null
     };
-    
-    // دالة إعداد الاستماع
-    const setupListener = () => {
-      try {
-        // التحقق من وجود الدالة
-        if (!api.listenMqtt || typeof api.listenMqtt !== 'function') {
-          console.error("دالة listenMqtt غير متوفرة");
-          return;
-        }
 
-        // إيقاف الاستماع السابق إن وجد بشكل قوي
-        if (gameState.stopListening && typeof gameState.stopListening === 'function') {
-          try {
-            gameState.stopListening();
-            gameState.stopListening = null;
-          } catch (e) {
-            console.error("خطأ في إيقاف الاستماع السابق:", e);
-          }
-        }
+    // حفظ اللعبة في الذاكرة العامة
+    global.emojiGames.set(threadID, gameState);
 
-        // التأكد من عدم وجود استماع نشط
-        if (gameState.isListening) {
-          console.log("يوجد استماع نشط بالفعل، تخطي إنشاء جديد");
-          return;
-        }
-        
-        gameState.stopListening = api.listenMqtt((err, incomingEvent) => {
-          if (err) {
-            console.error("خطأ في الاستماع:", err);
-            return;
-          }
-          
-          // التحقق من صحة البيانات
-          if (!incomingEvent || 
-              incomingEvent.type !== "message" || 
-              !incomingEvent.body || 
-              incomingEvent.threadID !== gameState.threadID ||
-              !gameState.currentQuestion) {
-            return;
-          }
-          
-          try {
-            const userMessage = incomingEvent.body.trim();
-            
-            // التحقق من الإجابة الصحيحة
-            if (userMessage === gameState.currentQuestion.answer) {
-              const winnerName = incomingEvent.senderName || "اللاعب";
-              const winMessage = `🎉 مبروك! قام ${winnerName} بكتابة الإجابة الصحيحة: ${gameState.currentQuestion.answer}\n\n💡 اكتب "ايموجي" للعب مرة أخرى!`;
-              
-              api.sendMessage(winMessage, gameState.threadID)
-                .then(() => {
-                  // إيقاف الاستماع بعد الفوز
-                  if (gameState.stopListening && typeof gameState.stopListening === 'function') {
-                    try {
-                      gameState.stopListening();
-                      gameState.stopListening = null;
-                      gameState.isListening = false;
-                    } catch (e) {
-                      console.error("خطأ في إيقاف الاستماع بعد الفوز:", e);
-                    }
-                  }
-                })
-                .catch(error => console.error("خطأ في إرسال رسالة الفوز:", error));
-            }
-            // التحقق من طلب لعبة جديدة
-            else if (userMessage === "ايموجي") {
-              // منع تشغيل عدة ألعاب في نفس الوقت
-              if (gameState.isListening) {
-                // إيقاف الاستماع الحالي أولاً
-                if (gameState.stopListening && typeof gameState.stopListening === 'function') {
-                  try {
-                    gameState.stopListening();
-                    gameState.stopListening = null;
-                    gameState.isListening = false;
-                  } catch (e) {
-                    console.error("خطأ في إيقاف الاستماع قبل بدء لعبة جديدة:", e);
-                  }
-                }
-                
-                // انتظار قصير للتأكد من إغلاق الاستماع
-                setTimeout(() => {
-                  startNewGame().catch(error => {
-                    console.error("خطأ في بدء لعبة جديدة من الاستماع:", error);
-                  });
-                }, 100);
-              }
-            }
-            
-          } catch (messageError) {
-            console.error("خطأ في معالجة الرسالة:", messageError);
-          }
-        });
-        
-        gameState.isListening = true;
-        
-      } catch (listenerError) {
-        console.error("خطأ في إعداد الاستماع:", listenerError);
-      }
-    };
-    
     try {
-      // بدء اللعبة الأولى
-      gameState.currentQuestion = getRandomQuestion();
-      
       // إرسال السؤال الأول
       const initialMessage = "🎯 أول من يرسل هذا الإيموجي يفوز!\n\n📝 السؤال: " + gameState.currentQuestion.question;
       await message.reply(initialMessage);
-      
-      // بدء الاستماع
-      setupListener();
-      
+
+      // إعداد الاستماع
+      gameState.stopListening = api.listenMqtt((err, incomingEvent) => {
+        if (err) {
+          console.error("خطأ في الاستماع:", err);
+          return;
+        }
+
+        // التحقق من صحة البيانات والتأكد من أن اللعبة لا تزال نشطة
+        if (!incomingEvent || 
+            incomingEvent.type !== "message" || 
+            !incomingEvent.body || 
+            incomingEvent.threadID !== threadID ||
+            !gameState.isActive ||
+            !global.emojiGames.has(threadID)) {
+          return;
+        }
+
+        try {
+          const userMessage = incomingEvent.body.trim();
+
+          // التحقق من الإجابة الصحيحة
+          if (userMessage === gameState.currentQuestion.answer) {
+            const winnerName = incomingEvent.senderName || "اللاعب";
+            const winMessage = `🎉 مبروك! قام ${winnerName} بكتابة الإجابة الصحيحة: ${gameState.currentQuestion.answer}\n\n💡 اكتب "ايموجي" للعب مرة أخرى!`;
+
+            api.sendMessage(winMessage, threadID)
+              .then(() => {
+                // إيقاف اللعبة وحذفها
+                gameState.isActive = false;
+                if (gameState.stopListening && typeof gameState.stopListening === 'function') {
+                  try {
+                    gameState.stopListening();
+                  } catch (e) {
+                    console.error("خطأ في إيقاف الاستماع بعد الفوز:", e);
+                  }
+                }
+                global.emojiGames.delete(threadID);
+              })
+              .catch(error => console.error("خطأ في إرسال رسالة الفوز:", error));
+          }
+          // التحقق من طلب لعبة جديدة
+          else if (userMessage === "ايموجي") {
+            // سيتم معالجة هذا في استدعاء جديد للأمر
+            // لا نفعل شيء هنا لتجنب التداخل
+            return;
+          }
+
+        } catch (messageError) {
+          console.error("خطأ في معالجة الرسالة:", messageError);
+        }
+      });
+
     } catch (error) {
       console.error("خطأ في تشغيل اللعبة:", error);
       await message.reply("❌ حدث خطأ في تشغيل اللعبة");
+
+      // حذف اللعبة في حالة الخطأ
+      if (global.emojiGames.has(threadID)) {
+        global.emojiGames.delete(threadID);
+      }
     }
   }
 };
