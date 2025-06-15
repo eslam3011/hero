@@ -1,5 +1,5 @@
 
-module.exports = {
+export default {
   keywords: ['الاوامر', 'اوامر', 'commands', 'help'],
   age: 17,
   Developer: 'khir',

@@ -1,6 +1,5 @@
-
-const fs = require("fs-extra");
-const {
+import fs from "fs-extra";
+import {
   convertTime,
   defaultStderrClearLine,
   enableStderrClearLine,
@@ -22,15 +21,15 @@ const {
   translate,
   shortenURL,
   getStreamFromURL
-} = require('./modules');
-const { gradientText } = require('./style');
+} from './modules.js';
+import { gradientText } from './style.js';
 
 // تشغيل نص متدرج الألوان
 gradientText();
 
-const login = require("fb-chat-api-temp");
-const path = require('path');
-const express = require('express');
+import login from "fb-chat-api-temp";
+import path from 'path';
+import express from 'express';
 const app = express();
 const port = process.env.PORT || 3000;
 
@@ -155,13 +154,13 @@ async function loadCommands() {
   try {
     const files = await fs.readdir(heroCommands);
     commands = [];
-    
+
     for (const file of files) {
       if (path.extname(file) === '.js') {
         try {
           // حذف الكاش لإعادة التحميل
           delete require.cache[require.resolve(path.join(heroCommands, file))];
-          const command = require(path.join(heroCommands, file));
+          const command = await import(path.join(heroCommands, file));
           commands.push(command);
           console.log(`✅ [${commands.length}] تم تحميل الأمر: ${file}`);
         } catch (err) {
@@ -169,7 +168,7 @@ async function loadCommands() {
         }
       }
     }
-    
+
     console.log(`🎉 تم تحميل ${commands.length} أمر بنجاح!`);
   } catch (err) {
     console.error('❌ خطأ في قراءة مجلد الأوامر:', err.message);
@@ -180,13 +179,13 @@ async function loadCommands() {
 async function startBot() {
   try {
     console.log('🚀 بدء تشغيل Hero Bot 2025...');
-    
+
     // تحميل الأوامر
     await loadCommands();
-    
+
     // قراءة حالة التطبيق
     const appState = JSON.parse(await fs.readFile('appstate.json', 'utf8'));
-    
+
     // تسجيل الدخول
     login({ appState }, async (err, api) => {
       if (err) {
@@ -195,7 +194,7 @@ async function startBot() {
       }
 
       console.log('✅ تم تسجيل الدخول بنجاح!');
-      
+
       // إعدادات API
       api.setOptions({
         listenEvents: true,
@@ -233,12 +232,12 @@ async function handleEvent(api, event) {
       if (event.body && typeof event.body === 'string') {
         const word = event.body.trim().split(" ")[0];
         const args = event.body.trim().split(" ").slice(1);
-        
+
         // البحث عن الأمر المناسب
         const matchedCommand = commands.find(command => 
           command.keywords && command.keywords.includes(word)
         );
-        
+
         if (matchedCommand) {
           try {
             await matchedCommand.onStart({
@@ -274,14 +273,14 @@ async function handleEvent(api, event) {
         }
       }
       break;
-      
+
     case "event":
       // معالجة أحداث المجموعة
       if (event.logMessageType) {
         console.log(`📝 حدث في المجموعة: ${event.logMessageType}`);
       }
       break;
-      
+
     default:
       // أحداث أخرى
       break;

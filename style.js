@@ -1,5 +1,5 @@
 
-const chalk = require('chalk');
+import chalk from 'chalk';
 
 function gradientText() {
   const logo = `
@@ -59,4 +59,4 @@ function gradientText() {
   console.log(chalk.red('━'.repeat(70)));
 }
 
-module.exports = { gradientText };
+export { gradientText };

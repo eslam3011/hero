@@ -1,6 +1,6 @@
-const https = require('https');
+import https from 'https';
 
-module.exports = {
+export default {
   keywords: ['زكسل'],
   age: 17,
   Developer: 'khir',

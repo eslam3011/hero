@@ -1,6 +1,6 @@
-const responsible = require("../config")
-ad = responsible.ADMINBOT
-module.exports = {
+import responsible from "../config.json" assert { type: "json" };
+const ad = responsible.ADMINBOT;
+export default {
   keywords: ['انا'],
   age: 17,
   Developer: 'khir',
