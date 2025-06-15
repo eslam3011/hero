@@ -333,8 +333,21 @@ export default {
           }
           // التحقق من طلب لعبة جديدة
           else if (userMessage === "ايموجي") {
-            // سيتم معالجة هذا في استدعاء جديد للأمر
-            // لا نفعل شيء هنا لتجنب التداخل
+            // إيقاف اللعبة الحالية فوراً
+            gameState.isActive = false;
+            if (gameState.stopListening && typeof gameState.stopListening === 'function') {
+              try {
+                gameState.stopListening();
+              } catch (e) {
+                console.error("خطأ في إيقاف الاستماع عند طلب لعبة جديدة:", e);
+              }
+            }
+            global.emojiGames.delete(threadID);
+            
+            // إرسال رسالة تأكيد إيقاف اللعبة القديمة
+            api.sendMessage("⏹️ تم إيقاف اللعبة السابقة. سيتم بدء لعبة جديدة...", threadID)
+              .catch(error => console.error("خطأ في إرسال رسالة الإيقاف:", error));
+            
             return;
           }
 
