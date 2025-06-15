@@ -267,11 +267,16 @@ export default {
     };
     
     let currentQuestion = random_question;
-    let stopListening;
+    let stopListening = null;
     
     // دالة الاستماع
     const setupListener = () => {
       try {
+        // إيقاف الاستماع السابق إن وجد
+        if (stopListening && typeof stopListening === 'function') {
+          stopListening();
+        }
+        
         stopListening = api.listenMqtt((err, event) => {
           if (err) {
             console.error("خطأ في الاستماع:", err);
@@ -283,11 +288,15 @@ export default {
               // التحقق من الإجابة الصحيحة
               if (event.body.trim() === currentQuestion.answer) {
                 api.sendMessage("🎉 مبروك! قام " + (event.senderName || "اللاعب") + " بكتابة الإجابة الصحيحة: " + currentQuestion.answer, event.threadID);
-                if (stopListening) stopListening(); // إيقاف الاستماع
+                if (stopListening && typeof stopListening === 'function') {
+                  stopListening(); // إيقاف الاستماع
+                }
               }
               // التحقق من طلب لعبة جديدة
               else if (event.body.trim() === "ايموجي") {
-                if (stopListening) stopListening(); // إيقاف الاستماع الحالي
+                if (stopListening && typeof stopListening === 'function') {
+                  stopListening(); // إيقاف الاستماع الحالي
+                }
                 // بدء لعبة جديدة
                 startNewGame().then((newQuestion) => {
                   currentQuestion = newQuestion;
