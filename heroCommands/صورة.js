@@ -1,4 +1,6 @@
-module.exports = {
+import axios from 'axios';
+
+export default {
   keywords: ['صورة'],
   age: 17,
   Developer: 'khir',
@@ -24,8 +26,7 @@ getExtFromAttachmentType,
     translate,
     shortenURL,
 getStreamFromURL,
-  }) {
-  const axios = require('axios');
+  }) {s');
 
 const apiUrl = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=en&dt=t&q=${args.join(" ")}`;
 

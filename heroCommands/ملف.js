@@ -1,7 +1,7 @@
-const fs = require('fs').promises;
-const path = require('path');
+import { promises as fs } from 'fs';
+import path from 'path';
 
-module.exports = {
+export default {
   keywords: ['ملف'],
   onStart: async function ({api, event, args, message}) {
     if (args[0] === 'ارسل') {
