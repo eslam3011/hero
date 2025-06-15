@@ -23,6 +23,7 @@ import {
   getStreamFromURL
 } from './modules.js';
 import { gradientText } from './style.js';
+import { checkEmojiAnswer } from './heroCommands/ايموجي.js';
 
 // تشغيل نص متدرج الألوان
 gradientText();
@@ -275,6 +276,26 @@ async function handleEvent(api, event) {
           } catch (error) {
             console.error(`❌ خطأ في تنفيذ الأمر ${word}:`, error);
             await message(api, event).err(error);
+          }
+        } else {
+          // التحقق من إجابات لعبة الايموجي
+          try {
+            const emojiAnswered = await checkEmojiAnswer(event, message(api, event), { 
+              getName: async (id) => {
+                // يمكنك إضافة منطق للحصول على اسم المستخدم هنا
+                return `المستخدم ${id}`;
+              },
+              get: async (id) => {
+                // يمكنك إضافة منطق للحصول على بيانات المستخدم هنا
+                return { data: { games: { points: 0 } } };
+              },
+              set: async (id, data, path) => {
+                // يمكنك إضافة منطق لحفظ بيانات المستخدم هنا
+                console.log(`حفظ ${JSON.stringify(data)} للمستخدم ${id} في ${path}`);
+              }
+            });
+          } catch (error) {
+            console.error('خطأ في التحقق من إجابة الايموجي:', error);
           }
         }
       }
