@@ -51,7 +51,11 @@ export default {
         message.reply(newSentence);
       })
       .catch(error => {
-        console.error(' API:', error.message);
+        console.error('API Error:', error.message);
+        message.reply('عذراً، حدث خطأ في الاتصال بالAPI');
+      });
+  },
+};
       });
 
   },

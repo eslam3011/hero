@@ -1,11 +1,11 @@
-const axios = require("axios");
-const fs = require("fs-extra");
-const path = require("path");
-const qs = require("qs");
-const moment = require("moment-timezone");
-const mimeDB = require("mime-db");
-const _ = require("lodash");
-const { google } = require("googleapis");
+import axios from "axios";
+import fs from "fs-extra";
+import path from "path";
+import qs from "qs";
+import moment from "moment-timezone";
+import mimeDB from "mime-db";
+import _ from "lodash";
+import { google } from "googleapis";
 
 const word = [
 	'A', 'Á', 'À', 'Ả', 'Ã', 'Ạ', 'a', 'á', 'à', 'ả', 'ã', 'ạ',
@@ -160,7 +160,7 @@ function getTime(timestamps, format) {
 		format = timestamps;
 		timestamps = undefined;
 	}
-	return moment(timestamps).tz(config.timeZone).format(format);
+	return moment(timestamps).tz(global.config?.timeZone || 'Africa/Cairo').format(format);
 }
 
 function jsonStringifyColor(obj, filter, indent, level) {
@@ -168,6 +168,13 @@ function jsonStringifyColor(obj, filter, indent, level) {
 	indent = indent || 0;
 	level = level || 0;
 	let output = '';
+
+	// تعريف ألوان بسيطة
+	const colors = {
+		green: (text) => `\x1b[32m${text}\x1b[0m`,
+		yellow: (text) => `\x1b[33m${text}\x1b[0m`,
+		gray: (text) => `\x1b[90m${text}\x1b[0m`
+	};
 
 	if (typeof obj === 'string')
 		output += colors.green(`"${obj}"`);
@@ -198,7 +205,7 @@ function jsonStringifyColor(obj, filter, indent, level) {
 						key = colors.green(JSON.stringify(key));
 
 					output += ' '.repeat(indent + level * indent) + `${key}:${indent ? ' ' : ''}`;
-					output += utils.jsonStringifyColor(value, filter, indent, level + 1) + ',\n';
+					output += jsonStringifyColor(value, filter, indent, level + 1) + ',\n';
 				});
 
 				output = output.replace(/,\n$/, '\n');
@@ -211,7 +218,7 @@ function jsonStringifyColor(obj, filter, indent, level) {
 			else {
 				output += colors.gray('[\n');
 				obj.forEach(subObj => {
-					output += ' '.repeat(indent + level * indent) + utils.jsonStringifyColor(subObj, filter, indent, level + 1) + ',\n';
+					output += ' '.repeat(indent + level * indent) + jsonStringifyColor(subObj, filter, indent, level + 1) + ',\n';
 				});
 
 				output = output.replace(/,\n$/, '\n');
@@ -231,10 +238,10 @@ function jsonStringifyColor(obj, filter, indent, level) {
 function message(api, event) {
 	async function sendMessageError(err) {
 		if (typeof err === "object" && !err.stack)
-			err = utils.removeHomeDir(JSON.stringify(err, null, 2));
+			err = removeHomeDir(JSON.stringify(err, null, 2));
 		else
-			err = utils.removeHomeDir(`${err.name || err.error}: ${err.message}`);
-		return await api.sendMessage(utils.getText("utils", "errorOccurred", err), event.threadID, event.messageID);
+			err = removeHomeDir(`${err.name || err.error}: ${err.message}`);
+		return await api.sendMessage(`❌ حدث خطأ: ${err}`, event.threadID, event.messageID);
 	}
 	return {
 		send: async (form, callback) => {
@@ -517,7 +524,7 @@ async function shortenURL(url) {
 }
 
 
-const utils = {
+export {
 	convertTime,
 	defaultStderrClearLine,
 	enableStderrClearLine,
@@ -538,8 +545,5 @@ const utils = {
 	getStreamsFromAttachment,
 	getStreamFromURL,
 	translate,
-	shortenURL,
-  getStreamFromURL,
+	shortenURL
 };
-
-module.exports = utils;

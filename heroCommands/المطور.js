@@ -1,4 +1,4 @@
-module.exports = {
+export default {
   keywords: ['المطور'],
   age: 17,
   Developer: 'khir',
@@ -27,11 +27,21 @@ module.exports = {
     getStreamsFromAttachment,
     translate,
     shortenURL,
-getStreamFromURL,}) {message.send(`‖↫ الاسم :〖خير صالح 〗
+    getStreamFromURL,
+  }) {
+    message.send(`‖↫ الاسم :〖خير صالح 〗
 
 ‖↫العمر :  〖 17 سنة〗
 
-‖↫البلد : 〖مصر ام العالم 〗
+‖↫البلد : 〖مصر ام العالم〗
+
+‖↫رقم الواتس: 〖+201119558517〗
+
+‖↫الفيسبوك: 〖https://facebook.com/profile.php?id=100065172561645〗
+
+‖↫البوت تم تطويره في عام 2025 ✨`);
+  },
+};م 〗
 
 ‖↫الفيس :〖www.facebook.com/100065172561645 〗`)
     
