@@ -245,79 +245,175 @@ export default {
       { question: "اسعاف", answer: "⚕️" }
     ];
 
-    // اختيار سؤال عشوائي
-    const random_index = Math.floor(Math.random() * questions.length);
-    const random_question = questions[random_index];
-    random_question.threadID = event.threadID;
-    
-    // إرسال السؤال العشوائي
-    await message.reply("🎯 أول من يرسل هذا الإيموجي يفوز!\n\n📝 السؤال: " + random_question.question);
-    
+    // التحقق من وجود الدوال المطلوبة
+    if (!api || typeof api.sendMessage !== 'function') {
+      console.error("API غير متوفر أو غير مكتمل");
+      return;
+    }
+
+    // متغيرات حالة اللعبة
+    let gameState = {
+      currentQuestion: null,
+      threadID: event.threadID,
+      isListening: false,
+      stopListening: null
+    };
+
+    // دالة لاختيار سؤال عشوائي
+    const getRandomQuestion = () => {
+      const randomIndex = Math.floor(Math.random() * questions.length);
+      return { ...questions[randomIndex] };
+    };
+
     // دالة لبدء لعبة جديدة
     const startNewGame = async () => {
       try {
-        const new_random_index = Math.floor(Math.random() * questions.length);
-        const new_random_question = questions[new_random_index];
-        await api.sendMessage("🎯 لعبة جديدة! أول من يرسل هذا الإيموجي يفوز!\n\n📝 السؤال: " + new_random_question.question, event.threadID);
-        return new_random_question;
+        // إيقاف الاستماع السابق بشكل قوي
+        if (gameState.stopListening && typeof gameState.stopListening === 'function') {
+          try {
+            gameState.stopListening();
+            gameState.stopListening = null;
+            gameState.isListening = false;
+          } catch (e) {
+            console.error("خطأ في إيقاف الاستماع في startNewGame:", e);
+          }
+        }
+
+        // التأكد من إعادة تعيين الحالة
+        gameState.isListening = false;
+        gameState.stopListening = null;
+
+        // اختيار سؤال جديد
+        gameState.currentQuestion = getRandomQuestion();
+        
+        // إرسال السؤال
+        const questionMessage = "🎯 لعبة جديدة! أول من يرسل هذا الإيموجي يفوز!\n\n📝 السؤال: " + gameState.currentQuestion.question;
+        await api.sendMessage(questionMessage, gameState.threadID);
+        
+        // بدء الاستماع الجديد
+        setupListener();
+        
+        return gameState.currentQuestion;
       } catch (error) {
         console.error("خطأ في بدء لعبة جديدة:", error);
+        await api.sendMessage("❌ حدث خطأ في بدء لعبة جديدة", gameState.threadID);
         throw error;
       }
     };
     
-    let currentQuestion = random_question;
-    let stopListening = null;
-    
-    // دالة الاستماع
+    // دالة إعداد الاستماع
     const setupListener = () => {
       try {
-        // إيقاف الاستماع السابق إن وجد
-        if (stopListening && typeof stopListening === 'function') {
-          stopListening();
+        // التحقق من وجود الدالة
+        if (!api.listenMqtt || typeof api.listenMqtt !== 'function') {
+          console.error("دالة listenMqtt غير متوفرة");
+          return;
+        }
+
+        // إيقاف الاستماع السابق إن وجد بشكل قوي
+        if (gameState.stopListening && typeof gameState.stopListening === 'function') {
+          try {
+            gameState.stopListening();
+            gameState.stopListening = null;
+          } catch (e) {
+            console.error("خطأ في إيقاف الاستماع السابق:", e);
+          }
+        }
+
+        // التأكد من عدم وجود استماع نشط
+        if (gameState.isListening) {
+          console.log("يوجد استماع نشط بالفعل، تخطي إنشاء جديد");
+          return;
         }
         
-        stopListening = api.listenMqtt((err, event) => {
+        gameState.stopListening = api.listenMqtt((err, incomingEvent) => {
           if (err) {
             console.error("خطأ في الاستماع:", err);
             return;
           }
           
-          if (event.type === "message" && event.body && event.threadID === currentQuestion.threadID) {
-            try {
-              // التحقق من الإجابة الصحيحة
-              if (event.body.trim() === currentQuestion.answer) {
-                api.sendMessage("🎉 مبروك! قام " + (event.senderName || "اللاعب") + " بكتابة الإجابة الصحيحة: " + currentQuestion.answer, event.threadID);
-                if (stopListening && typeof stopListening === 'function') {
-                  stopListening(); // إيقاف الاستماع
-                }
-              }
-              // التحقق من طلب لعبة جديدة
-              else if (event.body.trim() === "ايموجي") {
-                if (stopListening && typeof stopListening === 'function') {
-                  stopListening(); // إيقاف الاستماع الحالي
-                }
-                // بدء لعبة جديدة
-                startNewGame().then((newQuestion) => {
-                  currentQuestion = newQuestion;
-                  currentQuestion.threadID = event.threadID;
-                  setupListener(); // إعداد استماع جديد
-                }).catch((error) => {
-                  console.error("خطأ في إعداد لعبة جديدة:", error);
-                });
-              }
+          // التحقق من صحة البيانات
+          if (!incomingEvent || 
+              incomingEvent.type !== "message" || 
+              !incomingEvent.body || 
+              incomingEvent.threadID !== gameState.threadID ||
+              !gameState.currentQuestion) {
+            return;
+          }
+          
+          try {
+            const userMessage = incomingEvent.body.trim();
             
-            } catch (messageError) {
-              console.error("خطأ في معالجة الرسالة:", messageError);
+            // التحقق من الإجابة الصحيحة
+            if (userMessage === gameState.currentQuestion.answer) {
+              const winnerName = incomingEvent.senderName || "اللاعب";
+              const winMessage = `🎉 مبروك! قام ${winnerName} بكتابة الإجابة الصحيحة: ${gameState.currentQuestion.answer}\n\n💡 اكتب "ايموجي" للعب مرة أخرى!`;
+              
+              api.sendMessage(winMessage, gameState.threadID)
+                .then(() => {
+                  // إيقاف الاستماع بعد الفوز
+                  if (gameState.stopListening && typeof gameState.stopListening === 'function') {
+                    try {
+                      gameState.stopListening();
+                      gameState.stopListening = null;
+                      gameState.isListening = false;
+                    } catch (e) {
+                      console.error("خطأ في إيقاف الاستماع بعد الفوز:", e);
+                    }
+                  }
+                })
+                .catch(error => console.error("خطأ في إرسال رسالة الفوز:", error));
             }
+            // التحقق من طلب لعبة جديدة
+            else if (userMessage === "ايموجي") {
+              // منع تشغيل عدة ألعاب في نفس الوقت
+              if (gameState.isListening) {
+                // إيقاف الاستماع الحالي أولاً
+                if (gameState.stopListening && typeof gameState.stopListening === 'function') {
+                  try {
+                    gameState.stopListening();
+                    gameState.stopListening = null;
+                    gameState.isListening = false;
+                  } catch (e) {
+                    console.error("خطأ في إيقاف الاستماع قبل بدء لعبة جديدة:", e);
+                  }
+                }
+                
+                // انتظار قصير للتأكد من إغلاق الاستماع
+                setTimeout(() => {
+                  startNewGame().catch(error => {
+                    console.error("خطأ في بدء لعبة جديدة من الاستماع:", error);
+                  });
+                }, 100);
+              }
+            }
+            
+          } catch (messageError) {
+            console.error("خطأ في معالجة الرسالة:", messageError);
           }
         });
+        
+        gameState.isListening = true;
+        
       } catch (listenerError) {
         console.error("خطأ في إعداد الاستماع:", listenerError);
       }
     };
     
-    // بدء الاستماع الأول
-    setupListener();
+    try {
+      // بدء اللعبة الأولى
+      gameState.currentQuestion = getRandomQuestion();
+      
+      // إرسال السؤال الأول
+      const initialMessage = "🎯 أول من يرسل هذا الإيموجي يفوز!\n\n📝 السؤال: " + gameState.currentQuestion.question;
+      await message.reply(initialMessage);
+      
+      // بدء الاستماع
+      setupListener();
+      
+    } catch (error) {
+      console.error("خطأ في تشغيل اللعبة:", error);
+      await message.reply("❌ حدث خطأ في تشغيل اللعبة");
+    }
   }
 };
