@@ -91,3 +91,15 @@ run = ["sh", "-c", "node index.js"]
 [[ports]]
 localPort = 3000
 externalPort = 80
+
+[workflows]
+runButton = "Start Hero Bot 2025"
+
+[[workflows.workflow]]
+name = "Start Hero Bot 2025"
+author = 20387396
+mode = "sequential"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "node index.js"
