@@ -277,13 +277,6 @@ async function handleEvent(api, event) {
             console.error(`❌ خطأ في تنفيذ الأمر ${word}:`, error);
             await message(api, event).err(error);
           }
-        } else {
-          // التحقق من إجابات لعبة الايموجي
-          try {
-            const emojiAnswered = await checkEmojiAnswer(event, message(api, event));
-          } catch (error) {
-            console.error('خطأ في التحقق من إجابة الايموجي:', error);
-          }
         }
       }
       break;

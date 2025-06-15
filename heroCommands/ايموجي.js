@@ -248,6 +248,7 @@ export default {
     // اختيار سؤال عشوائي
     const random_index = Math.floor(Math.random() * questions.length);
     const random_question = questions[random_index];
+    random_question.threadID = event.threadID;
     
     // إرسال السؤال العشوائي
     await message.reply("🎯 أول من يرسل هذا الإيموجي يفوز!\n\n📝 السؤال: " + random_question.question);
@@ -277,7 +278,7 @@ export default {
             return;
           }
           
-          if (event.type === "message" && event.body) {
+          if (event.type === "message" && event.body && event.threadID === currentQuestion.threadID) {
             try {
               // التحقق من الإجابة الصحيحة
               if (event.body.trim() === currentQuestion.answer) {
@@ -290,6 +291,7 @@ export default {
                 // بدء لعبة جديدة
                 startNewGame().then((newQuestion) => {
                   currentQuestion = newQuestion;
+                  currentQuestion.threadID = event.threadID;
                   setupListener(); // إعداد استماع جديد
                 }).catch((error) => {
                   console.error("خطأ في إعداد لعبة جديدة:", error);
@@ -299,8 +301,6 @@ export default {
               else if (/[\u{1F600}-\u{1F64F}]|[\u{1F300}-\u{1F5FF}]|[\u{1F680}-\u{1F6FF}]|[\u{1F1E0}-\u{1F1FF}]|[\u{2600}-\u{26FF}]|[\u{2700}-\u{27BF}]/u.test(event.body)) {
                 // إرسال رسالة في المجموعة للإجابة الخاطئة
                 api.sendMessage("❌ الإجابة خاطئة! حاول مرة أخرى.\n💡 المطلوب: " + currentQuestion.question, event.threadID);
-                // طباعة في الكونسول للتتبع
-                console.log("❌ الإجابة غلط - أرسل " + (event.senderName || "مجهول") + ": " + event.body + " والإجابة الصحيحة هي: " + currentQuestion.answer);
               }
             } catch (messageError) {
               console.error("خطأ في معالجة الرسالة:", messageError);
