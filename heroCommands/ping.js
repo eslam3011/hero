@@ -2,7 +2,7 @@
 import { performance } from 'perf_hooks';
 
 export default {
-  keywords: ['ping', 'بينج'],
+  keywords: ['ping', 'استجابة'],
   age: 17,
   Developer: 'khir',
   name: 'khir salh',

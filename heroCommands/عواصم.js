@@ -1,16 +1,10 @@
-
 export default {
   keywords: ['عواصم'],
   age: 17,
   Developer: 'khir',
   name: 'khir salh',
-  onStart: async function ({
-    api,
-    event,
-    args,
-    message,
-  }) {
-    const questions = [
+  onStart: async function ({ api, event, message }) {
+    const flags = [
       { question: "مصر", answer: "القاهرة" },
       { question: "السعودية", answer: "الرياض" },
       { question: "الإمارات", answer: "أبوظبي" },
@@ -63,130 +57,56 @@ export default {
       { question: "الدنمارك", answer: "كوبنهاغن" }
     ];
 
-    // استخدام متغير global لتخزين حالة اللعبة لكل مجموعة
-    if (!global.capitalGames) {
-      global.capitalGames = new Map();
-    }
-
+    if (!global.flagGame) global.flagGame = new Map();
     const threadID = event.threadID;
 
-    // التحقق من وجود لعبة نشطة في هذه المجموعة
-    if (global.capitalGames.has(threadID)) {
-      const existingGame = global.capitalGames.get(threadID);
-
-      // إيقاف الاستماع السابق
-      if (existingGame.stopListening && typeof existingGame.stopListening === 'function') {
+    if (global.flagGame.has(threadID)) {
+      const existingGame = global.flagGame.get(threadID);
+      if (typeof existingGame.stopListening === 'function') {
         try {
           existingGame.stopListening();
         } catch (e) {
-          console.error("خطأ في إيقاف الاستماع السابق:", e);
+          console.error("فشل في إنهاء اللعبة السابقة:", e);
         }
       }
-
-      // حذف اللعبة السابقة
-      global.capitalGames.delete(threadID);
+      global.flagGame.delete(threadID);
     }
 
-    // دالة لاختيار سؤال عشوائي
-    const getRandomQuestion = () => {
-      const randomIndex = Math.floor(Math.random() * questions.length);
-      return { ...questions[randomIndex] };
-    };
+    const selected = flags[Math.floor(Math.random() * flags.length)];
 
-    // إنشاء لعبة جديدة
-    const gameState = {
-      currentQuestion: getRandomQuestion(),
-      threadID: threadID,
+    const game = {
+      correctFlag: selected.answer,
+      threadID,
       isActive: true,
       stopListening: null
     };
 
-    // حفظ اللعبة في الذاكرة العامة
-    global.capitalGames.set(threadID, gameState);
+    global.flagGame.set(threadID, game);
 
-    try {
-      // إرسال السؤال الأول
-      const initialMessage = "🌍 ما هي عاصمة هذا البلد؟\n\n📍 البلد: " + gameState.currentQuestion.question + "\n\n💡 اكتب اسم العاصمة!";
-      await message.reply(initialMessage);
+    await message.reply(`اول من يرسل عاصمة الدولة يفوز : [ ${selected.question} ]\n🕹️`);
 
-      // إعداد الاستماع
-      gameState.stopListening = api.listenMqtt((err, incomingEvent) => {
-        if (err) {
-          console.error("خطأ في الاستماع:", err);
-          return;
-        }
+    game.stopListening = api.listenMqtt((err, eventMsg) => {
+      if (
+        err || !eventMsg || eventMsg.type !== "message" ||
+        !eventMsg.body || eventMsg.threadID !== threadID ||
+        !game.isActive
+      ) return;
 
-        // التحقق من صحة البيانات والتأكد من أن اللعبة لا تزال نشطة
-        if (!incomingEvent || 
-            incomingEvent.type !== "message" || 
-            !incomingEvent.body || 
-            incomingEvent.threadID !== threadID ||
-            !gameState.isActive ||
-            !global.capitalGames.has(threadID)) {
-          return;
-        }
+      const userInput = eventMsg.body.trim();
 
-        try {
-          const userMessage = incomingEvent.body.trim();
+      if (userInput === game.correctFlag) {
+        api.getUserInfo(eventMsg.senderID, (err, info) => {
+          const name = info?.[eventMsg.senderID]?.name || "لاعب مجهول";
+          message.send(`🎉 مبروك! ${name} أرسل العلم الصحيح: ${game.correctFlag}`);
+          game.isActive = false;
 
-          // التحقق من الإجابة الصحيحة
-          const cleanUserMessage = userMessage.replace(/\s+/g, '').trim().toLowerCase();
-          const cleanAnswer = gameState.currentQuestion.answer.replace(/\s+/g, '').trim().toLowerCase();
-          
-          console.log(`مقارنة العواصم: "${cleanUserMessage}" مع "${cleanAnswer}"`);
-          
-          if (cleanUserMessage === cleanAnswer || userMessage.toLowerCase() === gameState.currentQuestion.answer.toLowerCase()) {
-            const winnerName = incomingEvent.senderName || "اللاعب";
-            const winMessage = `🎉 مبروك! قام ${winnerName} بكتابة الإجابة الصحيحة: ${gameState.currentQuestion.answer}\n\n💡 اكتب "عواصم" للعب مرة أخرى!`;
-
-            api.sendMessage(winMessage, threadID)
-              .then(() => {
-                // إيقاف اللعبة وحذفها
-                gameState.isActive = false;
-                if (gameState.stopListening && typeof gameState.stopListening === 'function') {
-                  try {
-                    gameState.stopListening();
-                  } catch (e) {
-                    console.error("خطأ في إيقاف الاستماع بعد الفوز:", e);
-                  }
-                }
-                global.capitalGames.delete(threadID);
-              })
-              .catch(error => console.error("خطأ في إرسال رسالة الفوز:", error));
-          }
-          // التحقق من طلب لعبة جديدة
-          else if (userMessage === "عواصم") {
-            // إيقاف اللعبة الحالية فوراً
-            gameState.isActive = false;
-            if (gameState.stopListening && typeof gameState.stopListening === 'function') {
-              try {
-                gameState.stopListening();
-              } catch (e) {
-                console.error("خطأ في إيقاف الاستماع عند طلب لعبة جديدة:", e);
-              }
-            }
-            global.capitalGames.delete(threadID);
-            
-            // إرسال رسالة تأكيد إيقاف اللعبة القديمة
-            api.sendMessage("⏹️ تم إيقاف اللعبة السابقة. سيتم بدء لعبة جديدة...", threadID)
-              .catch(error => console.error("خطأ في إرسال رسالة الإيقاف:", error));
-            
-            return;
+          if (typeof game.stopListening === 'function') {
+            try { game.stopListening(); } catch (e) {}
           }
 
-        } catch (messageError) {
-          console.error("خطأ في معالجة الرسالة:", messageError);
-        }
-      });
-
-    } catch (error) {
-      console.error("خطأ في تشغيل اللعبة:", error);
-      await message.reply("❌ حدث خطأ في تشغيل اللعبة");
-
-      // حذف اللعبة في حالة الخطأ
-      if (global.capitalGames.has(threadID)) {
-        global.capitalGames.delete(threadID);
+          global.flagGame.delete(threadID);
+        });
       }
-    }
+    });
   }
 };
